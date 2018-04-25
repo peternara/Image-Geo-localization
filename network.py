@@ -153,7 +153,7 @@ def frn(featuremap, W, H, D):
     convd3x3 = conv(CROW, 3, 3, W*H, 1, 1, name='convd3x3', padding='SAME', trainable=True)
     
     # BxDsxDsx(WxH) to BxDsxDsx1
-    #   왜 (WxH) > 1 로 변환하지??
+    #   왜 (WxH) > 1 로 변환하지?? WxH 크기 그대로이지 않나??
     convd = conv(convd3x3, 1, 1, W*H, 1, 1, name='convd', padding='SAME', trainable=True)
     
     # BxDsxDsx1 to BxD
