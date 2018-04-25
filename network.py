@@ -141,19 +141,27 @@ def frn(featuremap, W, H, D):
     # CROW pooling
 
     D_sqrt = int(math.sqrt(D))
+    
     # transpose feature from BxWxHxD to BxDxWxH
     CROW = tf.transpose(featuremap, [0, 3, 1, 2])
+    
     # reshape feature from BxDxWxH to BxDsxDsx(WxH)
     CROW = tf.reshape(CROW, shape=[-1, D_sqrt, D_sqrt, W*H])
+    
     # BxDsxDsx(WxH) to BxDsxDsx(WxH)
+    #   conv(input, filter_height, filter_width, num_filters, stride_y, stride_x, name, padding='SAME', groups=1, trainable=False, init_wb=None, initializer=None)
     convd3x3 = conv(CROW, 3, 3, W*H, 1, 1, name='convd3x3', padding='SAME', trainable=True)
+    
     # BxDsxDsx(WxH) to BxDsxDsx1
+    #   왜 (WxH) > 1 로 변환하지??
     convd = conv(convd3x3, 1, 1, W*H, 1, 1, name='convd', padding='SAME', trainable=True)
+    
     # BxDsxDsx1 to BxD
-    convd = tf.reshape(convd, [-1, D])
+    convd = tf.reshape(convd, [-1, D])    
     convd = tf.nn.softmax(convd)
+    
     # BxD multiply BxWxHxD
-    convd_tile = tf.tile(convd, [1, W, H, 1])
+    convd_tile               = tf.tile(convd, [1, W, H, 1])
     featuremap_with_Dweights = tf.multiply(convd_tile, featuremap)
 
     return featuremap_with_Dweights
