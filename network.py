@@ -135,10 +135,26 @@ def crn(conv5, weights_file):
 
     return m
 
+# CROW pooling
+#  https://github.com/Xi030010/Image-Geo-localization/blob/7b7fc01587c2ec6115318daf95fcd126ae9f3a40/test_network.py#L139
+# featuremap < conv5 = conv(conv4, 3, 3, 256, 1, 1, groups=2, name='conv5')... case alexnet
+#   D = featuremap.get_shape()[3].value # D is 256
+#   W = featuremap.get_shape()[1].value # W is 13
+#   H = featuremap.get_shape()[2].value # H is 13 
+# #call part
+# #soft_assignment
+# #x -> s, BxWxHxD is the dimension of featuremap output of AlexNet, and dimension of convs is BxWxHxK
+#    k_h = 1
+#    k_w = 1
+#    c_o = K
+#    s_h = 1
+#    s_w = 1
+# featuremap_with_Dweights = crow(featuremap, W, H, D)
+# convs = conv(featuremap_with_Dweights, k_h, k_w, c_o, s_h, s_w, name="convs", trainable=True,
+#              initializer=tf.random_normal_initializer(stddev=1 / math.sqrt(W*H*D)))
+# conva = tf.nn.softmax(convs)  # s -> a, a is BxWxHxK
 
-def frn(featuremap, W, H, D):
-
-    # CROW pooling
+def frn(featuremap, W, H, D):  
 
     D_sqrt = int(math.sqrt(D))
     
