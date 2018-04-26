@@ -173,7 +173,7 @@ def frn(featuremap, W, H, D):
     convd = conv(convd3x3, 1, 1, W*H, 1, 1, name='convd', padding='SAME', trainable=True)
     
     # BxDsxDsx1 to BxD
-    convd = tf.reshape(convd, [-1, D])    
+    convd = tf.reshape(convd, [-1, D])  # spatial weight인줄 알았는데, D 차원인거 보니 channel weight인듯 
     convd = tf.nn.softmax(convd)
     
     # BxD multiply BxWxHxD
