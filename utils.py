@@ -315,13 +315,13 @@ def get_one_batch(filename, batch_size, step):
 
     # one group of 4 imgs will turn out 2 triplets, get batch_size triplets from x_32
     x_2 = []
-    for i in range(batch_size):
-        x_2.append(x_32[i * 4 + 0])
-        x_2.append(x_32[i * 4 + 1])
-        x_2.append(x_32[i * 4 + 2])
-        x_2.append(x_32[i * 4 + 0])
-        x_2.append(x_32[i * 4 + 1])
-        x_2.append(x_32[i * 4 + 3])
+    for i in range(batch_size): # 2 triplet pair 3x2 =6 
+        x_2.append(x_32[i * 4 + 0]) # 0 : query
+        x_2.append(x_32[i * 4 + 1]) # 1 : positive
+        x_2.append(x_32[i * 4 + 2]) # 2 : negative
+        x_2.append(x_32[i * 4 + 0]) # 0 : query
+        x_2.append(x_32[i * 4 + 1]) # 1 : positive
+        x_2.append(x_32[i * 4 + 3]) # 2 : negative
 
     # get one batch of numpy array, shape is [batch_size * 3, 227, 227, 3].
     x_batch = np.array(x_2)
