@@ -456,12 +456,18 @@ def netvlad(X, trainlayers=[], with_crn=False, with_crow=False, weights_file=Non
 
 
 def main(argv=None):
+    
     # dir of data txt files
     # datatxt_dir = 'data/'
-    datatxt_dir = FLAGS.datatxt_dir
-    train_url_file = 'datatxt/extract_all_sanfran_netvlad_trn_fr_rmgsv_rmflickr3.txt'
+    datatxt_dir    = FLAGS.datatxt_dir
+    train_url_file = 'datatxt/c.txt'
 
+    # load data
     # get num of train step per epoch
+    # 요런형태의 이미지 데이터인듯
+    #      * https://s3.amazonaws.com/LocationRecognition/Datasets/list_sf1.txt
+    #      * https://s3.amazonaws.com/LocationRecognition/Datasets/list_sf0.txt  
+    # data in train_file is grouped by 4 consist of 1 query img, 1 positive img, 2 negative imgs
     num_step_train = utils.get_step(train_url_file, FLAGS.batch_size)
 
     # dir to save model
@@ -511,8 +517,8 @@ def main(argv=None):
                     print('epoch: ' + str(FLAGS.restore_model_epoch) + ', step: ' + str(left_step_train) + ', batch is ready.')
 
                     x_batch = utils.get_one_batch(train_url_file,
-                                                  FLAGS.batch_size,
-                                                  left_step_train - 1)
+                                                  FLAGS.batch_size, # 24
+                                                  left_step_train - 1) # step
 
                     sess.run(train, feed_dict={X: x_batch})
 
