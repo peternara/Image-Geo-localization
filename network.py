@@ -515,7 +515,10 @@ def main(argv=None):
 
                     # train
                     print('epoch: ' + str(FLAGS.restore_model_epoch) + ', step: ' + str(left_step_train) + ', batch is ready.')
-
+                    
+                    # 2 triplet pair >  3x2 = 6 
+                    # 0:query, 1:positve, 2:negative1, 3:query, 4:positvie 5:negative2
+                    # cf) 0==3, 1==4 image
                     x_batch = utils.get_one_batch(train_url_file,
                                                   FLAGS.batch_size, # 24
                                                   left_step_train - 1) # step
