@@ -258,18 +258,12 @@ def netvlad(X, trainlayers=[], with_crn=False, with_crow=False, weights_file=Non
 
     # 5 conv of alexnet
     with tf.name_scope('alexnet'):
-
         with tf.variable_scope('alexnet'):
-
-            conv5 = alexnet(X=X,
-                            trainlayers=trainlayers,
-                            weights=weights)
+            conv5 = alexnet( X=X, trainlayers=trainlayers, weights=weights)
 
     # contextual reweighting network
     with tf.name_scope('crn'):
-
         with tf.variable_scope('crn'):
-
             if with_crn:
                 m = crn(conv5, weights_file)
                 m = tf.expand_dims(m, -1)
@@ -277,9 +271,9 @@ def netvlad(X, trainlayers=[], with_crn=False, with_crow=False, weights_file=Non
 
     # netvlad
     with tf.name_scope('netvlad'):
-
         with tf.variable_scope('netvlad'):
-
+            
+            # alexnet conv feature map = batchXWidthxHeightxChannels
             # get W, H, D from featuremap
             # D is 256
             D = conv5.get_shape()[3].value
@@ -290,7 +284,6 @@ def netvlad(X, trainlayers=[], with_crn=False, with_crow=False, weights_file=Non
 
             # convs weights
             with tf.variable_scope('convs'):
-
                 initializer = tf.random_normal_initializer(stddev=1 / math.sqrt(D))
                 if not weights:
                     if 'convs' in weights.keys():
