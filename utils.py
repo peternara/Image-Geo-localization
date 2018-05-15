@@ -281,7 +281,7 @@ def get_step(filename, batch_size):
     with open(filename) as f:
         data = f.readlines()
     # get num of step
-    # 만약 len(data) =10000 이면, temp = 39, num_step = 40
+    # 만약 len(data) = 40000 &  batch_size = 64 이면, temp = 156, num_step = 157
     
     temp     = len(data) // (batch_size * 4) # 4의 의미는?? > data in train_file is grouped by 4 consist of 1 query img, 1 positive img, 2 negative imgs
     num_step = [temp + 1, temp][len(data) % (batch_size * 4) == 0]
