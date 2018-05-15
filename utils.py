@@ -281,7 +281,8 @@ def get_step(filename, batch_size):
     with open(filename) as f:
         data = f.readlines()
     # get num of step
-    temp = len(data) // (batch_size * 4)
+    # 만약 len(data) =10000 이면, temp = 39, num_step = 40
+    temp     = len(data) // (batch_size * 4) # 4의 의미는??
     num_step = [temp + 1, temp][len(data) % (batch_size * 4) == 0]
     return num_step
 
