@@ -464,6 +464,11 @@ def main(argv=None):
     #              이미지 패스와 위도/경도 정보가 존재   
     # data in train_file is grouped by 4 consist of 1 query img, 1 positive img, 2 negative imgs
     num_step_train = utils.get_step(train_url_file, FLAGS.batch_size)
+    # num_step_train 정수값 - epoch 의 divie 값인듯 - 그니까 1 epoch를 달성하기 위해 몇개의 step으로 구성?
+    #  예) num_step = [(2048 // (8*4)))+1, (2048 // (8*4))))][1024%(8*4)==0]
+    #   2048 = 전체 이미지 개수
+    #   8 = batch size
+    #   4 = train_file is grouped by 4 consist of 1 query img, 1 positive img, 2 negative imgs
 
     # dir to save model
     model_dir = FLAGS.model_dir
