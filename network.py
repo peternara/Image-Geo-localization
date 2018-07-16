@@ -460,6 +460,8 @@ def main(argv=None):
     # 요런형태의 이미지 데이터인듯
     #      * https://s3.amazonaws.com/LocationRecognition/Datasets/list_sf1.txt
     #      * https://s3.amazonaws.com/LocationRecognition/Datasets/list_sf0.txt  
+    #        ex)  00011000_00012000_3/PCI_sp_11869_37.788961_-122.387777_937762221_3_671122075_270.335_-19.0166.jpg 0 554.000000
+    #              이미지 패스와 위도/경도 정보가 존재   
     # data in train_file is grouped by 4 consist of 1 query img, 1 positive img, 2 negative imgs
     num_step_train = utils.get_step(train_url_file, FLAGS.batch_size)
 
@@ -477,7 +479,7 @@ def main(argv=None):
                                   with_crow=FLAGS.with_frn,
                                   weights_file=FLAGS.weights_file,
                                   num_step_train=num_step_train)
-
+    # netvlad 함수에서, num_step_train=num_step_train 에서, num_step_train를 사용한 흔적이 없음.  
 
     with tf.Session() as sess:
 
